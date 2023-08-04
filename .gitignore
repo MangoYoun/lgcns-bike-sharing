@@ -169,3 +169,6 @@ mlruns/
 # artifacts/
 data/storage
 predictions/
+
+#notebooks
+notebooks
