@@ -7,7 +7,15 @@ from pydantic import BaseModel
 
 
 class Features(BaseModel):
-    #작성
+    season: int
+    holiday: int
+    workingday: int
+    weather: int
+    temp: float
+    atemp: float
+    humidity: int
+    windspeed: float
+
 
 bento_model = bentoml.sklearn.get("bike_sharing:latest")
 model_runner = bento_model.to_runner()
