@@ -168,4 +168,4 @@ mlruns/
 #mlflow artifacts
 artifacts/
 data/storage
-#predictions/
+predictions/
