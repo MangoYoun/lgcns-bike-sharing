@@ -1,31 +1,21 @@
-[[source]]
-url = "https://pypi.org/simple"
-verify_ssl = true
-name = "pypi"
+import bentoml
+import numpy as np
+import numpy.typing as npt
+import pandas as pd
+from bentoml.io import JSON, NumpyNdarray
+from pydantic import BaseModel
 
-[packages]
-bentoml = "==1.0.20"
-scikit-learn = "==1.2.2"
-pandas = "==2.0.0"
-numpy = "==1.24.3"
-mlflow = "==2.3.2"
-rich = "*"
-category-encoders = "==2.6.1"
-pydantic = "==1.10.8"
-deepchecks = "==0.17.3"
-joblib = "==1.2.0"
 
-[dev-packages]
-matplotlib = "*"
-seaborn = "*"
-pre-commit = "*"
-black = "*"
-isort = "*"
-mypy = "*"
-jupyter = "*"
-ipykernel = "*"
-ipython = "*"
+class Features(BaseModel):
+    #작성
 
-[requires]
-python_version = "3.9"
-python_full_version = "3.9.16"
+bento_model = bentoml.sklearn.get("bike_sharing:latest")
+model_runner = bento_model.to_runner()
+svc = bentoml.Service("bike_sharing_regressor", runners=[model_runner])
+
+
+@svc.api(input=JSON(pydantic_model=Features), output=NumpyNdarray())
+async def predict(input_data: Features) -> npt.NDArray:
+    input_df = pd.DataFrame([input_data.dict()])
+    log_pred = await model_runner.predict.async_run(input_df)
+    return np.expm1(log_pred)
