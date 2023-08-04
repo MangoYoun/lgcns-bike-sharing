@@ -7,7 +7,15 @@ from pydantic import BaseModel
 
 
 class Features(BaseModel):
-    #작성
+    season: int
+    holiday: int
+    workingday: int
+    weather: int
+    temp: float
+    atemp: float
+    humidity: int
+    windspeed: float
+
 
 bento_model = bentoml.sklearn.get("bike_sharing:latest")
 model_runner = bento_model.to_runner()
@@ -18,4 +26,4 @@ svc = bentoml.Service("bike_sharing_regressor", runners=[model_runner])
 async def predict(input_data: Features) -> npt.NDArray:
     input_df = pd.DataFrame([input_data.dict()])
     log_pred = await model_runner.predict.async_run(input_df)
-    return np.expm1(log_pred)
+    return log_pred
