@@ -2,18 +2,17 @@ import numpy as np
 import pandas as pd
 from category_encoders import TargetEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.preprocessing import FunctionTransformer
+from sklearn.preprocessing import FunctionTransformer, OneHotEncoder
 
 CAT_FEATURES = [
-    "area_type",
-    "city",
-    "furnishing_status",
-    "tenant_preferred",
-    "point_of_contact",
+    'season',
+    'holiday',
+    'workingday',
+    'weather',
 ]
 
 
-def extract_floor(floor_info: str) -> int:
+def ratio_variable_maker(floor_info: str) -> int:
     """층수 컬럼에서 실제 층수만 추출합니다.
 
     현재 층수 정보는 'X out of Y'로 되어 있습니다.
@@ -50,13 +49,13 @@ def floor_extractor(df: pd.DataFrame, col: str) -> pd.DataFrame:
 # 3. 범주형 변수(CAT_FEATURES)는 타겟 인코딩 적용 (from category_encoders import TargetEncoder)
 preprocess_pipeline = ColumnTransformer(
     transformers=[
-        ("sqrt_transformer", FunctionTransformer(np.sqrt), ["size"]),
-        (
-            "floor_extractor",
-            FunctionTransformer(floor_extractor, kw_args={"col": "floor"}),
-            ["floor"],
-        ),
-        ("target_encoder", TargetEncoder(), CAT_FEATURES),
+        # ("sqrt_transformer", FunctionTransformer(np.sqrt), ["size"]),
+        # (
+        #     "floor_extractor",
+        #     FunctionTransformer(floor_extractor, kw_args={"col": "floor"}),
+        #     ["floor"],
+        # ),
+        ("one_hot_encoder", OneHotEncoder(), CAT_FEATURES),
     ],
     remainder="passthrough",
     verbose_feature_names_out=False,
