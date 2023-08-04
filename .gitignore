@@ -166,7 +166,7 @@ mlruns/
 .DS_Store
 
 #mlflow artifacts
-artifacts/
+# artifacts/
 data/storage
 predictions/
 
