@@ -5,10 +5,10 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import FunctionTransformer, OneHotEncoder
 
 CAT_FEATURES = [
-    'season',
-    'holiday',
-    'workingday',
-    'weather',
+    "season",
+    "holiday",
+    "workingday",
+    "weather",
 ]
 
 
@@ -55,7 +55,7 @@ preprocess_pipeline = ColumnTransformer(
         #     FunctionTransformer(floor_extractor, kw_args={"col": "floor"}),
         #     ["floor"],
         # ),
-        ("one_hot_encoder", OneHotEncoder(), CAT_FEATURES),
+        # ("one_hot_encoder", OneHotEncoder(), CAT_FEATURES),
     ],
     remainder="passthrough",
     verbose_feature_names_out=False,
