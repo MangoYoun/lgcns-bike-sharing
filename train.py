@@ -45,12 +45,9 @@ if __name__ == "__main__":
 
     logger.info("Set candidates for hyper-parameters...")
     params_candidates = {
-        # "learning_rate": [0.01, 0.05, 0.1],
-        # "max_depth": [3, 4, 5, 6],
-        # "max_features": [1.0, 0.9, 0.8, 0.7],
-        "learning_rate": [0.05],
-        "max_depth": [5],
-        "max_features": [1.0],
+        "learning_rate": [0.01, 0.05, 0.1],
+        "max_depth": [3, 4, 5, 6],
+        "max_features": [1.0, 0.9, 0.8, 0.7],
     }
 
     param_set = get_param_set(params=params_candidates)
